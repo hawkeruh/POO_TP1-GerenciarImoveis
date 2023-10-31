@@ -1,8 +1,6 @@
+#include "main.cpp" //para bibliotecas
 #ifndef OBJETOS_HPP
 #define OBJEOS_HPP
-
-#include <string>
-using namespace std; 
 
 class Imovel {
     int id, numero, quartos, banheiros;
@@ -36,6 +34,63 @@ public:
     string getBairro() const;
     string getCidade() const;
 
+};
+
+class Casa : public Imovel {
+    int andares; 
+    bool sala_jantar; 
+
+public:
+    Casa(): Imovel();
+    ~Casa();
+
+    void setAndares(int);
+    int getAndares() const;
+
+    void setSalaJantar(bool);
+    bool getSalaJantar(); 
+};
+
+class Apartamento : public Imovel {
+    int andar;
+    float taxa_condominio;
+    bool elevador, sacada;
+
+public:
+    Apartamento(): Imovel();
+    ~Apartamento();
+
+    void setAndar(int);
+    int getAndar() const;
+
+    void setTaxa(float);
+    float getTaxa() const; 
+
+    void setElevador(bool);
+    void setSacada(bool);
+
+    bool getElevador();
+    bool getSacada();
+};
+
+class Chacara : public Imovel {
+    bool salao_festa, salao_jogos, campo_futebol, churrasqueira, piscina; 
+
+public:
+    Chacara(): Imovel();
+    ~Chacara();
+
+    void setSalaoFesta(bool);
+    void setSalaoJogos(bool);
+    void setCampoFutebol(bool);
+    void setChurrasqueira(bool);
+    void setPiscina(bool);
+
+    bool getSalaoFesta();
+    bool getSalaoJogos();
+    bool getCampoFutebol();
+    bool getChurrasqueira();
+    bool getPiscina();
 };
 
 #endif
