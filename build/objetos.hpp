@@ -1,4 +1,7 @@
-#include "main.cpp" //para bibliotecas
+#include <iostream>
+#include <iomanip> 
+#include <string>
+using namespace std;
 #ifndef OBJETOS_HPP
 #define OBJEOS_HPP
 
@@ -8,7 +11,7 @@ class Imovel {
     string proprietario, rua, bairro, cidade;
 
 public:
-    Imovel();
+    Imovel(int=0, int=0, int=0, int=0, float=0.0, string="", string="", string="", string="");
     ~Imovel();
 
     void setID(int);

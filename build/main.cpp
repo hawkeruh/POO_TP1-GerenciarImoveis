@@ -1,8 +1,4 @@
-#include <iostream>
-#include <iomanip> 
-#include <string>
 #include "objetos.hpp"
-using namespace std;
 
 int main (){
 
