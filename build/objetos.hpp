@@ -3,7 +3,7 @@
 #include <string>
 using namespace std;
 #ifndef OBJETOS_HPP
-#define OBJEOS_HPP
+#define OBJETOS_HPP
 
 class Imovel {
     int id, numero, quartos, banheiros;
@@ -44,7 +44,7 @@ class Casa : public Imovel {
     bool sala_jantar; 
 
 public:
-    Casa(): Imovel();
+    Casa(int=0, int=0, int=0, int=0, float=0.0, string="", string="", string="", string="", int=0, bool=false);
     ~Casa();
 
     void setAndares(int);
@@ -60,7 +60,7 @@ class Apartamento : public Imovel {
     bool elevador, sacada;
 
 public:
-    Apartamento(): Imovel();
+    Apartamento(int=0, int=0, int=0, int=0, float=0.0, string="", string="", string="", string="", int=0, float=0.0, bool=false, bool=false);
     ~Apartamento();
 
     void setAndar(int);
@@ -80,7 +80,7 @@ class Chacara : public Imovel {
     bool salao_festa, salao_jogos, campo_futebol, churrasqueira, piscina; 
 
 public:
-    Chacara(): Imovel();
+    Chacara(int=0, int=0, int=0, int=0, float=0.0, string="", string="", string="", string="", bool=false, bool=false, bool=false, bool=false, bool=false);
     ~Chacara();
 
     void setSalaoFesta(bool);

@@ -3,7 +3,12 @@
 int main (){
 
     //Somente UMA coleção polimorfica de objetos no main.
+    Imovel i; 
+    Casa casinha; 
+    int x;
 
+    cin >> x;
+    casinha.setID(x);
     /*
     1 - Arquivo com os imoveis possui 16 linhas, cada linha um imovel
     2 - Inicia programa, ler arquivo para preencher coleção
