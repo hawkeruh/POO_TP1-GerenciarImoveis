@@ -123,6 +123,9 @@ void Apartamento::setSacada(bool sacada) {
     this->sacada = sacada;
 }
 
+void Apartamento::setAndar(int andar) {
+    this->andar = andar;
+}
 //APARTAMENTO - getters
 float Apartamento::getTaxa() const {
     return taxa_condominio;
@@ -134,6 +137,10 @@ bool Apartamento::getElevador() {
 
 bool Apartamento::getSacada() {
     return sacada;
+}
+
+int Apartamento::getAndar() const {
+    return andar;
 }
 
 //CHACARA
@@ -184,4 +191,59 @@ bool Chacara::getChurrasqueira() {
 
 bool Chacara::getPiscina() {
     return piscina;
+}
+
+
+//CLASSES AMIGA E/OU SOBRECARGAS
+
+string SimNao (bool x){
+    if (x) {
+        return "Sim";
+    } else {
+        return "Não";
+    }
+}
+
+ostream& operator<<(ostream& saida, Imovel& imovel){
+
+    saida << "-----"
+    << "\nProprietario: " << imovel.getProprietario()
+    << "\nPreço: " << imovel.getValor()
+    << "\nNúmero de Quartos: " << imovel.getQuartos()
+    << "\nRua: " << imovel.getRua()
+    << "\nBairro: " << imovel.getBairro()
+    << "\nCidade: " << imovel.getCidade();
+
+    return saida;
+}
+
+ostream& operator<<(ostream& saida, Casa& imovel){
+
+    saida << "\nCaracterística Específica: "
+    << "\nAndares: " << imovel.getAndares()
+    << "-----" << endl;
+
+    return saida;
+}
+
+ostream& operator<<(ostream& saida, Apartamento& imovel){
+
+    saida << "\nCaracterística Específica: "
+    << "\nElevador: " << SimNao(imovel.getElevador())
+    << "-----" << endl;
+
+    return saida;
+}
+
+ostream& operator<<(ostream& saida, Chacara& imovel){
+
+    saida << "\nCaracterística Específica: "
+    << "\nPiscina: " << SimNao(imovel.getPiscina())
+    << "-----" << endl;
+
+    return saida;
+}
+
+bool Imovel::operator==(Imovel& comparar){
+        return id == comparar.id;
 }

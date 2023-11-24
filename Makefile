@@ -23,4 +23,5 @@ clean:
 # Executar e colocar o input do arquivo texto.
 .PHONY: run
 run: $(EXECUTABLE)
-	./$(EXECUTABLE) < $(INPUT_FILE)
+	./$(EXECUTABLE) 
+# < $(INPUT_FILE)
