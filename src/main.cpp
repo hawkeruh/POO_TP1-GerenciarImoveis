@@ -4,6 +4,7 @@
 #include <unordered_set>
 #include <memory> //ponteiros inteligentes
 #include <fstream> //escrita e leitura de arquivos
+#include <sstream> //stringstream
 
 int main (){
 
@@ -18,6 +19,7 @@ int main (){
 
     //Arquivo texto com o banco de dados VERIFICAR EM QUAL PASTA O ARQUIVO TEXTO DEVE SE ENCONTRAR
     ifstream arquivo("database_imoveis.txt");
+    
     if (!arquivo.is_open()){
         cout << "Erro ao abrir banco de dados." << endl;
         return 0;
@@ -25,6 +27,8 @@ int main (){
 
 
     //Começa a leitura do arquivo até não encontrar mais linhas
+    //colocar um WHILE o arquivo nao está no final, pegar linhas
+
     if (getline(arquivo,linha)) {
 
         stringstream ss(linha); //Extrair palavras de linhas

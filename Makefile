@@ -2,26 +2,24 @@ CXX = g++
 CXXFLAGS = -std=c++11 -Wall
 SRC_DIR = src
 BUILD_DIR = build
-EXECUTABLE = gerenciador
-INPUT_FILE = database_imoveis
+EXECUTABLE = corretora
 
+# Caminho dos arquivos
 SOURCES = $(wildcard $(SRC_DIR)/*.cpp)
+HEADERS = $(wildcard $(SRC_DIR)/*.hpp)
 OBJECTS = $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(SOURCES))
 
 $(EXECUTABLE): $(OBJECTS)
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
-# Compilar .cpp em .o
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
-	$(CXX) $(CXXFLAGS) -c -o $@ $<
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp $(HEADERS) | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) -c -o $@ $< -I$(SRC_DIR)
 
-# Limpar arquivos gerados depois da execução
+# Cria uma pasta build se não existir
+$(BUILD_DIR):
+	mkdir -p $@
+
+# Limpa
 .PHONY: clean
 clean:
-	rm -f $(BUILD_DIR)/*.o $(EXECUTABLE)
-
-# Executar e colocar o input do arquivo texto.
-.PHONY: run
-run: $(EXECUTABLE)
-	./$(EXECUTABLE) 
-# < $(INPUT_FILE)
+	rm -rf $(BUILD_DIR) $(EXECUTABLE)
