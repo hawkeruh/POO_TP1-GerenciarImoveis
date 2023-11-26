@@ -11,8 +11,9 @@ class Imovel {
     string proprietario, rua, bairro, cidade;
 
 public:
-    Imovel(int=0, int=0, int=0, int=0, float=0.0, string="", string="", string="", string="");
-    virtual ~Imovel();
+
+    Imovel(int, int, int, int, float, string, string, string, string);
+    virtual ~Imovel() = 0;
 
     void setID(int);
     void setNumero(int);
@@ -48,7 +49,8 @@ class Casa : public Imovel {
     bool sala_jantar; 
 
 public:
-    Casa(int=0, int=0, int=0, int=0, float=0.0, string="", string="", string="", string="", int=0, bool=false);
+
+    Casa(int, int, int, int, float, string, string, string, string, int, bool);
     ~Casa();
 
     void setAndares(int);
@@ -66,7 +68,8 @@ class Apartamento : public Imovel {
     bool elevador, sacada;
 
 public:
-    Apartamento(int=0, int=0, int=0, int=0, float=0.0, string="", string="", string="", string="", int=0, float=0.0, bool=false, bool=false);
+    
+    Apartamento(int, int, int, int, float, string, string, string, string, int, float, bool, bool);
     ~Apartamento();
 
     void setAndar(int);
@@ -85,10 +88,12 @@ public:
 };
 
 class Chacara : public Imovel {
+    
     bool salao_festa, salao_jogos, campo_futebol, churrasqueira, piscina; 
 
 public:
-    Chacara(int=0, int=0, int=0, int=0, float=0.0, string="", string="", string="", string="", bool=false, bool=false, bool=false, bool=false, bool=false);
+    
+    Chacara(int, int, int, int, float, string, string, string, string, bool, bool, bool, bool, bool);
     ~Chacara();
 
     void setSalaoFesta(bool);

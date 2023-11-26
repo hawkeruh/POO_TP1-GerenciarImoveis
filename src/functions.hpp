@@ -12,6 +12,7 @@ using namespace std;
 #define FUNCTIONS_HPP
 
 int qualTipoImovel(string);
+set<shared_ptr<Imovel>> criarBancodeDados();
 
 //FUNCAO 2 
 bool existeProprietario(set<shared_ptr<Imovel>>&);

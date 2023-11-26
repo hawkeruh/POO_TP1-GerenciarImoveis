@@ -12,6 +12,143 @@ int qualTipoImovel(string palavra){
         return 99;
     }
 }
+
+set<shared_ptr<Imovel>> criarBancodeDados(){
+
+    set<shared_ptr<Imovel>> colecao;
+    string linha, palavra, tipo;
+
+    //atributos comuns. da classe base
+    float valor;
+    string proprietario, rua, bairro, cidade;
+    int numero, quartos, banheiros, id = 1;
+
+    //atributos especificos
+    int v[5];
+    float taxa;
+
+    ifstream arquivo("database_imoveis.txt");
+    if (!arquivo.is_open()){
+        cout << "Erro ao abrir banco de dados." << endl;
+        return colecao;
+    }
+
+    while (getline(arquivo,linha)) {
+
+        stringstream ss(linha); //Extrair palavras de linhas
+        getline(ss, tipo, ';'); //Extrai uma palavra separada por ; e coloca na string 'palavra'
+
+        //Extrair atributos comuns
+        //Valor
+        getline(ss, palavra, ';');
+        valor = stof(palavra);
+
+        //Proprietario
+        getline(ss, proprietario, ';');
+        
+        //Rua
+        getline(ss, rua, ';');
+
+        //Bairro
+        getline(ss, bairro, ';');
+
+        //Cidade
+        getline(ss, cidade, ';');
+
+        //Numero
+        getline(ss, palavra, ';');
+        numero = stoi(palavra);
+
+        //Quartos
+        getline(ss, palavra, ';');
+        quartos = stoi(palavra);
+
+        //Banheiros
+        getline(ss, palavra, ';');
+        banheiros = stoi(palavra);
+
+        //Extrair caracteristicas especiais e inserir na colecao
+        switch (qualTipoImovel(tipo)) 
+        {
+        case 1: //CASA
+
+            //Andares
+            getline(ss, palavra, ';');
+            v[0] = stoi(palavra);
+
+            //Sala de Jantar
+            getline(ss, palavra, ';');
+            v[1] = stoi(palavra);
+
+            //Inserir
+            colecao.insert(make_shared<Casa>(id, numero, quartos, banheiros, valor, proprietario, rua, bairro, cidade,  v[0], v[1]));
+
+            break;
+
+        case 2: //APARTAMENTO
+            //Andar
+            getline(ss, palavra, ';');
+            v[0] = stoi(palavra);
+
+            //Taxa
+            getline(ss, palavra, ';');
+            taxa = stof(palavra);
+
+            //Elevador
+            getline(ss, palavra, ';');
+            v[1] = stoi(palavra);
+
+            //Sacada
+            getline(ss, palavra, ';');
+            v[2] = stoi(palavra);
+
+            //Inserir
+            colecao.insert(make_shared<Apartamento>(id, numero, quartos, banheiros, valor, proprietario, rua, bairro, cidade, v[0], taxa, v[1], v[2]));
+
+            break;
+
+        case 3: //CHACARA
+
+            //Festas
+            getline(ss, palavra, ';');
+            v[0] = stoi(palavra);
+            //Jogos
+            getline(ss, palavra, ';');
+            v[1] = stoi(palavra);
+            //Campo de Futebol
+            getline(ss, palavra, ';');
+            v[2] = stoi(palavra);
+            //Churrasqueira
+            getline(ss, palavra, ';');
+            v[3] = stoi(palavra);
+            //Piscina
+            getline(ss, palavra, ';');
+            v[4] = stoi(palavra);
+
+            //Inserir
+            colecao.insert(make_shared<Chacara>(id, numero, quartos, banheiros, valor, proprietario, rua, bairro, cidade, v[0], v[1], v[2], v[3], v[4]));
+
+            break;
+
+        case 99: //ERRO
+            cout << "Erro na leitura do tipo de imóvel a ser inserido. " << endl;
+            break;
+        }
+
+        id++; //Preencher ID
+    }
+
+    arquivo.close();
+
+    set<shared_ptr<Imovel>>::iterator iter;
+    for (iter = colecao.begin(); iter != colecao.end(); ++iter){
+        cout << (*iter)->getID() << endl;
+    }
+
+
+    return colecao;
+}
+
 //FUNCAO 2
 bool existeProprietario(set<shared_ptr<Imovel>>& colecao){
 
