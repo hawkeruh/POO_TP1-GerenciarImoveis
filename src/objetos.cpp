@@ -305,11 +305,3 @@ ostream& operator<<(ostream& saida, Chacara& imovel){
 bool Imovel::operator<(const Imovel& comparar) const {
     return this->getValor() < comparar.getValor();
 }
-
-bool Imovel::operator>(const Imovel& comparar) const {
-    return this->getValor() > comparar.getValor();   
-}
-
-bool Imovel::operator==(const Imovel& comparar) const {
-    return this->getID() == comparar.getID();
-}

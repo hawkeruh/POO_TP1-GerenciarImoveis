@@ -1,4 +1,4 @@
-    #include "objetos.hpp"
+#include "objetos.hpp"
 #include "functions.hpp"
 
 int main (){
@@ -66,7 +66,7 @@ int main (){
         break;
 
     case 5: //FUNCAO 5 - TIPO DE IMOVEL - ORDENADOS POR VALOR
-    
+
         cout << "Insira o tipo de imóvel que deseja visualizar. (Ordenado por valor)" << endl; 
         
         cin.ignore();

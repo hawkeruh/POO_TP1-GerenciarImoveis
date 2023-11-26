@@ -41,8 +41,6 @@ public:
 
     friend ostream& operator<<(ostream& saida, Imovel& imovel);
     bool operator<(const Imovel& comparar) const;
-    bool operator>(const Imovel& comparar) const;
-    bool operator==(const Imovel& comparar) const;
 
 };
 
@@ -62,6 +60,7 @@ public:
     bool getSalaJantar(); 
 
     friend ostream& operator<<(ostream& saida, Casa& imovel);
+ 
 };
 
 class Apartamento : public Imovel {
@@ -87,6 +86,7 @@ public:
     bool getSacada();
 
     friend ostream& operator<<(ostream& saida, Apartamento& imovel);
+
 };
 
 class Chacara : public Imovel {
@@ -111,6 +111,7 @@ public:
     bool getPiscina();
 
     friend ostream& operator<<(ostream& saida, Chacara& imovel);
+
 };
 
 string SimNao(bool);
