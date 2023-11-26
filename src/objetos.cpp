@@ -245,5 +245,13 @@ ostream& operator<<(ostream& saida, Chacara& imovel){
 }
 
 bool Imovel::operator==(Imovel& comparar){
-        return id == comparar.id;
+    return id = comparar.getID();
+}
+
+bool Imovel::operator<(Imovel& comparar){
+    return this->getValor() < comparar.getValor();
+}
+
+bool Imovel::operator>(Imovel& comparar){
+    return this->getValor() > comparar.getValor();
 }

@@ -1,10 +1,5 @@
 #include "objetos.hpp"
 #include "functions.hpp"
-//#include <container>
-#include <unordered_set>
-#include <memory> //ponteiros inteligentes
-#include <fstream> //escrita e leitura de arquivos
-#include <sstream> //stringstream
 
 int main (){
 
@@ -14,8 +9,9 @@ int main (){
     string tipo, linha, strAux;
     Imovel temp;
 
-    //Somente UMA coleção polimorfica de objetos no main.
-    unordered_set<shared_ptr<Imovel>> colecao;
+    //Somente UMA coleção polimorfica dentro do main
+    set<shared_ptr<Imovel>> colecao;
+    set<shared_ptr<Imovel>>::iterator iter;
 
     //Arquivo texto com o banco de dados VERIFICAR EM QUAL PASTA O ARQUIVO TEXTO DEVE SE ENCONTRAR
     ifstream arquivo("database_imoveis.txt");
@@ -25,16 +21,13 @@ int main (){
         return 0;
     }
 
-
     //Começa a leitura do arquivo até não encontrar mais linhas
-    //colocar um WHILE o arquivo nao está no final, pegar linhas
-
-    if (getline(arquivo,linha)) {
+    while (getline(arquivo,linha)) {
 
         stringstream ss(linha); //Extrair palavras de linhas
         getline(ss, tipo, ';'); //Extrai uma palavra separada por ; e coloca na string tipo
 
-        //Armazenar propriedades não especificas em imovel temporario. Palavra por palavra. (fazer em uma função?)
+        //Armazenar propriedades não especificas em imovel temporario. Palavra por palavra.
         //Valor
         getline(ss, strAux, ';');
         floatAux = stof(strAux);
@@ -130,20 +123,118 @@ int main (){
             cout << "Erro na leitura do tipo de imóvel a ser inserido. " << endl;
             return 0;
         }
-    
     }
 
+    arquivo.close();
 
-    /*
-    1 - Arquivo com os imoveis possui 16 linhas, cada linha um imovel
-    2 - Inicia programa, ler arquivo para preencher coleção
-    3 - Manipular e transformar coleção com operações:
-        1 - Sobrecarregar operador de saída
-        2 - Dado um proprietario: Função boleana, true se houver algum imovel do proprietario x
-        3 - Dado um valor: Retorna uma coleção com os imoveis de valor igual ou abaixo
-        4 - Dado numero de quartos: Retorna coleção com todos imoveis com numero de quartos igual ou acima
-        5 - 
-    */
+    // Manipular e transformar a coleção com operações:
+
+    cout << "Selecione a operação que deseja realizar. Para sair, digite 1." << endl; 
+    //INSERIR TABELA COM COMANDOS PARA ACESSAR FUNCOES
+    cin >> intAux;
+
+    switch (intAux)
+    {
+    case 1:
+
+        cout << "Fechando o gerenciador." << endl;
+        break;
+
+    case 2: //FUNCAO 2 - EXISTE PROPRIETARIO?
+        
+        if (existeProprietario(colecao)){
+            cout << "Existe esse proprietário." << endl;
+        } else {
+            cout << "Não existe esse proprietário." << endl;
+        }
+        
+        break;
+
+    case 3: //FUNCAO 3 - DADO VALOR - RETORNE IMOVEIS ABAIXO OU IGUAL
+
+        cout << "Insira o valor. Abaixo será exibido imóveis de valores abaixo ou igual." << endl;
+        cin >> floatAux; 
+
+        colecao = pesquisaValor(colecao, floatAux);
+        imprimirTodos(colecao, 0);
+
+        break;
+
+    case 4: //FUNCAO 4 - NUMERO DE QUARTOS - IMOVEIS IGUAL OU ACIMA
+        
+        cout << "Insira o número de quartos. Abaixo será exibido imóveis com o mesmo ou maior número de quartos." << endl;
+        cin >> intAux;
+
+        colecao = pesquisaQuarto(colecao, intAux);
+        imprimirTodos(colecao, 0);
+
+        break;
+
+    case 5: //FUNCAO 5 - TIPO DE IMOVEL - ORDENADOS POR VALOR
+        cout << "Insira o tipo de imóvel que deseja visualizar. (Ordenado por valor)" << endl; 
+        cin >> tipo; 
+
+        colecao = pesquisaTipo(colecao, tipo);
+        imprimirTodos(colecao, 0);
+
+        break;
+
+    case 6: //FUNCAO 6 - CIDADE - IMOVEIS ORDEM DECRESCENTE POR VALOR
+
+        cout << "Insira o nome da cidade que deseja ver os imóveis diponivéis. (Ordenado decrescentemente por valor)" << endl;
+        cin >> tipo; 
+
+        colecao = pesquisaCidade(colecao, tipo);
+        imprimirTodos(colecao, 2);
+
+        break;
+
+    case 7: //FUNCAO 7 - PROPRIETARIO - ITERADOR 
+/*
+        //retorna iterador. se encontrado imprimir com especificos.
+        cout << "Insira o nome do proprietário que procura." << endl;
+        cin >> tipo;
+
+        iter = pesquisaProprietario<T>(colecao, tipo);
+
+        if (iter != colecao.end()){
+
+            cout << "Proprietário encontrado. " << endl;
+            cout << *iter;
+
+            //Imprimir caracteristica especifica
+            if (shared_ptr<Casa> casa = dynamic_pointer_cast<Casa>(iter)){
+                cout << *casa;
+            } else if (shared_ptr<Apartamento> apartamento = dynamic_pointer_cast<Apartamento>(iter)){
+                cout << *apartamento;
+            } else if (shared_ptr<Chacara> chacara = dynamic_pointer_cast<Chacara>(iter)) {
+                cout << *chacara;
+            }
+
+        } else {
+            cout << "Proprietário não encontrado. " << endl;
+        }
+*/
+        break;
+
+    case 8: //FUNCAO 8 - OUTPUT NO TERMINAL/ARQUIVO - MOSTRAR TODOS OS DADOS
+
+        cout << "Deseja a impressão no terminal ou em um arquivo txt? 1. Terminal, 2. Arquivo texto " << endl; 
+        cin >> intAux;
+
+        switch (intAux)
+        {
+        case 1: //TERMINAL
+            imprimirTodos(colecao, 0);
+            break;
+        
+        case 2: //ARQUIVO TEXTO
+            imprimirTodos(colecao, 1);
+            break;
+        }
+        
+        break;
+    }
 
     return 0;
 }

@@ -12,7 +12,7 @@ class Imovel {
 
 public:
     Imovel(int=0, int=0, int=0, int=0, float=0.0, string="", string="", string="", string="");
-    ~Imovel();
+    virtual ~Imovel();
 
     void setID(int);
     void setNumero(int);
@@ -39,6 +39,8 @@ public:
 
     friend ostream& operator<<(ostream& saida, Imovel& imovel);
     bool operator==(Imovel& comparar);
+    bool operator<(Imovel& comparar);
+    bool operator>(Imovel& comparar);
 };
 
 class Casa : public Imovel {
