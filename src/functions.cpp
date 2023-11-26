@@ -13,9 +13,9 @@ int qualTipoImovel(string palavra){
     }
 }
 
-set<shared_ptr<Imovel>> criarBancodeDados(){
+multiset<shared_ptr<Imovel>> criarBancodeDados(){
 
-    set<shared_ptr<Imovel>> colecao;
+    multiset<shared_ptr<Imovel>> colecao;
     string linha, palavra, tipo;
 
     //atributos comuns. da classe base
@@ -81,7 +81,7 @@ set<shared_ptr<Imovel>> criarBancodeDados(){
             v[1] = stoi(palavra);
 
             //Inserir
-            colecao.insert(make_shared<Casa>(id, numero, quartos, banheiros, valor, proprietario, rua, bairro, cidade,  v[0], v[1]));
+            colecao.insert(make_shared<Casa>(valor, id, numero, quartos, banheiros, proprietario, rua, bairro, cidade,  v[0], v[1]));
 
             break;
 
@@ -103,7 +103,7 @@ set<shared_ptr<Imovel>> criarBancodeDados(){
             v[2] = stoi(palavra);
 
             //Inserir
-            colecao.insert(make_shared<Apartamento>(id, numero, quartos, banheiros, valor, proprietario, rua, bairro, cidade, v[0], taxa, v[1], v[2]));
+            colecao.insert(make_shared<Apartamento>(valor, id, numero, quartos, banheiros, proprietario, rua, bairro, cidade, v[0], taxa, v[1], v[2]));
 
             break;
 
@@ -126,7 +126,7 @@ set<shared_ptr<Imovel>> criarBancodeDados(){
             v[4] = stoi(palavra);
 
             //Inserir
-            colecao.insert(make_shared<Chacara>(id, numero, quartos, banheiros, valor, proprietario, rua, bairro, cidade, v[0], v[1], v[2], v[3], v[4]));
+            colecao.insert(make_shared<Chacara>(valor, id, numero, quartos, banheiros, proprietario, rua, bairro, cidade, v[0], v[1], v[2], v[3], v[4]));
 
             break;
 
@@ -137,28 +137,30 @@ set<shared_ptr<Imovel>> criarBancodeDados(){
 
         id++; //Preencher ID
     }
-
-    arquivo.close();
-
-    set<shared_ptr<Imovel>>::iterator iter;
+/*
+    multiset<shared_ptr<Imovel>>::iterator iter;
     for (iter = colecao.begin(); iter != colecao.end(); ++iter){
         cout << (*iter)->getID() << endl;
     }
+*/
 
+    arquivo.close();
 
     return colecao;
 }
 
 //FUNCAO 2
-bool existeProprietario(set<shared_ptr<Imovel>>& colecao){
+bool existeProprietario(multiset<shared_ptr<Imovel>>& colecao){
 
     string proprietario;
-    set<shared_ptr<Imovel>>::iterator iter;
+    multiset<shared_ptr<Imovel>>::iterator iter;
 
     cout << "Insira o nome do proprietário: " << endl;
-    cin >> proprietario;
+    cin.ignore();
+    getline(cin, proprietario);
 
     for (iter = colecao.begin(); iter != colecao.end(); ++iter){
+
             if ((*iter)->getProprietario() == proprietario){
                 return true; //TRUE - exite um proprietario com esse nome
             }
@@ -168,10 +170,10 @@ bool existeProprietario(set<shared_ptr<Imovel>>& colecao){
 }
 
 //FUNCAO 3
-set<shared_ptr<Imovel>> pesquisaValor (set<shared_ptr<Imovel>>& colecao, float valorPesquisa){
+multiset<shared_ptr<Imovel>> pesquisaValor (multiset<shared_ptr<Imovel>>& colecao, float valorPesquisa){
     
-    set<shared_ptr<Imovel>> colecaoValor; 
-    set<shared_ptr<Imovel>>::iterator iter;
+    multiset<shared_ptr<Imovel>> colecaoValor; 
+    multiset<shared_ptr<Imovel>>::iterator iter;
 
     for (iter = colecao.begin(); iter != colecao.end(); ++iter){
         if ((*iter)->getValor() <= valorPesquisa){ //Inserir valores menores ou iguais ao valor dado
@@ -183,10 +185,10 @@ set<shared_ptr<Imovel>> pesquisaValor (set<shared_ptr<Imovel>>& colecao, float v
 }
 
 //FUNCAO 4
-set<shared_ptr<Imovel>> pesquisaQuarto (set<shared_ptr<Imovel>>& colecao, int quartos){
+multiset<shared_ptr<Imovel>> pesquisaQuarto (multiset<shared_ptr<Imovel>>& colecao, int quartos){
 
-    set<shared_ptr<Imovel>> colecaoQuartos; 
-    set<shared_ptr<Imovel>>::iterator iter;
+    multiset<shared_ptr<Imovel>> colecaoQuartos; 
+    multiset<shared_ptr<Imovel>>::iterator iter;
 
     for (iter = colecao.begin(); iter != colecao.end(); ++iter){
         if((*iter)->getQuartos() >= quartos){
@@ -198,11 +200,11 @@ set<shared_ptr<Imovel>> pesquisaQuarto (set<shared_ptr<Imovel>>& colecao, int qu
 }
 
 //FUNCAO 5
-set<shared_ptr<Imovel>> pesquisaTipo (set<shared_ptr<Imovel>>& colecao, string palavra){
+multiset<shared_ptr<Imovel>> pesquisaTipo (multiset<shared_ptr<Imovel>>& colecao, string palavra){
 
     int tipo = qualTipoImovel(palavra);
-    set<shared_ptr<Imovel>> colecaoTipo;
-    set<shared_ptr<Imovel>>::iterator iter;
+    multiset<shared_ptr<Imovel>> colecaoTipo;
+    multiset<shared_ptr<Imovel>>::iterator iter;
 
     switch (tipo)
     {
@@ -233,12 +235,10 @@ set<shared_ptr<Imovel>> pesquisaTipo (set<shared_ptr<Imovel>>& colecao, string p
 }
 
 //FUNCAO 6
-set<shared_ptr<Imovel>> pesquisaCidade (set<shared_ptr<Imovel>>& colecao, string cidade){
+multiset<shared_ptr<Imovel>> pesquisaCidade (multiset<shared_ptr<Imovel>>& colecao, string cidade){
 
-    set<shared_ptr<Imovel>> colecaoCidade; 
-    set<shared_ptr<Imovel>>::iterator iter;
-
-    //colocar a string cidade em lower case
+    multiset<shared_ptr<Imovel>> colecaoCidade; 
+    multiset<shared_ptr<Imovel>>::iterator iter;
 
     for (iter = colecao.begin(); iter != colecao.end(); ++iter){
         if((*iter)->getCidade() == cidade){
@@ -266,9 +266,10 @@ typename set<shared_ptr<Imovel>>::iterator pesquisaProprietario(set<shared_ptr<I
 }
 */
 //FUNCAO 8
-void imprimirTodos (const set<shared_ptr<Imovel>>& colecao, int tipo){
+void imprimirTodos (const multiset<shared_ptr<Imovel>>& colecao, int tipo){
 
-    set<shared_ptr<Imovel>>::reverse_iterator iter;
+    multiset<shared_ptr<Imovel>> temp;
+    multiset<shared_ptr<Imovel>>::reverse_iterator iter;
     string saida = "saida.txt";
     ofstream arquivo(saida.c_str()); 
 
@@ -325,12 +326,14 @@ void imprimirTodos (const set<shared_ptr<Imovel>>& colecao, int tipo){
             arquivo.close();
         }
 
-
         break;
 
     case 2: //imprimir a colecao em reverso
 
         for (iter = colecao.rbegin(); iter != colecao.rend(); iter++){
+
+            shared_ptr<Imovel> imovel = *iter;
+            cout << *imovel;
 
             if (shared_ptr<Casa> casa = dynamic_pointer_cast<Casa>(*iter)){
                 cout << *casa;

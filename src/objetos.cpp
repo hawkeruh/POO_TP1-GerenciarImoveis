@@ -1,20 +1,20 @@
 #include "objetos.hpp"
 
 //IMOVEL
-Imovel::Imovel(int id, 
+Imovel::Imovel(float valor,
+                int id, 
                 int numero, 
                 int quartos, 
                 int banheiros, 
-                float valor, 
                 string proprietario, 
                 string rua, 
                 string bairro, 
                 string cidade)
-    : id(id), 
+    : valor(valor),
+    id(id), 
     numero(numero), 
     quartos(quartos), 
     banheiros(banheiros), 
-    valor(valor), 
     proprietario(proprietario), 
     rua(rua), 
     bairro(bairro), 
@@ -23,6 +23,10 @@ Imovel::Imovel(int id,
 Imovel::~Imovel() {}
 
 //IMOVEL - setters
+void Imovel::setValor(float valor) {
+    this->valor = valor;
+}
+
 void Imovel::setID(int id) {
     this->id = id;
 }
@@ -37,10 +41,6 @@ void Imovel::setQuartos(int quartos) {
 
 void Imovel::setBanheiros(int banheiros) {
     this->banheiros = banheiros;
-}
-
-void Imovel::setValor(float valor) {
-    this->valor = valor;
 }
 
 void Imovel::setProprietario(string proprietario) {
@@ -60,6 +60,10 @@ void Imovel::setCidade(string cidade) {
 }
 
 //IMOVEL - getters
+float Imovel::getValor() const {
+    return valor;
+}
+
 int Imovel::getID() const {
     return id;
 }
@@ -74,10 +78,6 @@ int Imovel::getQuartos() const {
 
 int Imovel::getBanheiros() const {
     return banheiros;
-}
-
-float Imovel::getValor() const {
-    return valor;
 }
 
 string Imovel::getProprietario() const {
@@ -98,18 +98,18 @@ string Imovel::getCidade() const {
 
 
 //CASA
-Casa::Casa(int id, 
+Casa::Casa(float valor,
+            int id, 
             int numero, 
             int quartos, 
             int banheiros, 
-            float valor, 
             string proprietario, 
             string rua, 
             string bairro, 
             string cidade, 
             int andares, 
             bool sala_jantar)
-    : Imovel(id, numero, quartos, banheiros, valor, proprietario, rua, bairro, cidade), 
+    : Imovel(valor, id, numero, quartos, banheiros, proprietario, rua, bairro, cidade), 
     andares(andares), 
     sala_jantar(sala_jantar){}
 
@@ -134,20 +134,20 @@ bool Casa::getSalaJantar() {
 }
 
 //APARTAMENTO
-Apartamento::Apartamento(int id, 
+Apartamento::Apartamento(float valor,
+                        int id, 
                         int numero, 
                         int quartos, 
                         int banheiros, 
-                        float valor, 
                         string proprietario, 
                         string rua, 
                         string bairro, 
-                        string cidade, 
+                        string cidade,
                         int andar, 
                         float taxa_condominio, 
                         bool elevador, 
                         bool sacada)
-    : Imovel(id, numero, quartos, banheiros, valor, proprietario, rua, bairro, cidade), 
+    : Imovel(valor, id, numero, quartos, banheiros, proprietario, rua, bairro, cidade), 
     andar(andar), 
     taxa_condominio(taxa_condominio), 
     elevador(elevador), 
@@ -189,11 +189,11 @@ int Apartamento::getAndar() const {
 }
 
 //CHACARA
-Chacara::Chacara(int id, 
+Chacara::Chacara(float valor,
+                    int id, 
                     int numero, 
                     int quartos, 
                     int banheiros, 
-                    float valor, 
                     string proprietario, 
                     string rua, 
                     string bairro, 
@@ -203,7 +203,7 @@ Chacara::Chacara(int id,
                     bool campo_futebol, 
                     bool churrasqueira, 
                     bool piscina)
-    : Imovel(id, numero, quartos, banheiros, valor, proprietario, rua, bairro, cidade),
+    : Imovel(valor, id, numero, quartos, banheiros, proprietario, rua, bairro, cidade),
       salao_festa(salao_festa), 
       salao_jogos(salao_jogos), 
       campo_futebol(campo_futebol), 
@@ -269,7 +269,7 @@ ostream& operator<<(ostream& saida, Imovel& imovel){
 
     saida << "-----"
     << "\nProprietario: " << imovel.getProprietario()
-    << "\nPreço: " << imovel.getValor()
+    << "\nPreço: " << fixed << setprecision(2) << imovel.getValor()
     << "\nNúmero de Quartos: " << imovel.getQuartos()
     << "\nRua: " << imovel.getRua()
     << "\nBairro: " << imovel.getBairro()
@@ -302,14 +302,14 @@ ostream& operator<<(ostream& saida, Chacara& imovel){
     return saida;
 }
 
-bool Imovel::operator==(Imovel& comparar){
-    return (id == comparar.getID());
-}
-
-bool Imovel::operator<(Imovel& comparar){
+bool Imovel::operator<(const Imovel& comparar) const {
     return this->getValor() < comparar.getValor();
 }
 
-bool Imovel::operator>(Imovel& comparar){
-    return this->getValor() > comparar.getValor();
+bool Imovel::operator>(const Imovel& comparar) const {
+    return this->getValor() > comparar.getValor();   
+}
+
+bool Imovel::operator==(const Imovel& comparar) const {
+    return this->getID() == comparar.getID();
 }

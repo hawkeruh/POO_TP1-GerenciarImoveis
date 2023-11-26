@@ -12,23 +12,23 @@ using namespace std;
 #define FUNCTIONS_HPP
 
 int qualTipoImovel(string);
-set<shared_ptr<Imovel>> criarBancodeDados();
+multiset<shared_ptr<Imovel>> criarBancodeDados();
 
 //FUNCAO 2 
-bool existeProprietario(set<shared_ptr<Imovel>>&);
+bool existeProprietario(multiset<shared_ptr<Imovel>>&);
 //FUNCAO 3
-set<shared_ptr<Imovel>> pesquisaValor (set<shared_ptr<Imovel>>&, float);
+multiset<shared_ptr<Imovel>> pesquisaValor (multiset<shared_ptr<Imovel>>&, float);
 //FUNCAO 4
-set<shared_ptr<Imovel>> pesquisaQuarto (set<shared_ptr<Imovel>>&, int);
+multiset<shared_ptr<Imovel>> pesquisaQuarto (multiset<shared_ptr<Imovel>>&, int);
 //FUNCAO 5
-set<shared_ptr<Imovel>> pesquisaTipo (set<shared_ptr<Imovel>>&, string);
+multiset<shared_ptr<Imovel>> pesquisaTipo (multiset<shared_ptr<Imovel>>&, string);
 //FUNCAO 6
-set<shared_ptr<Imovel>> pesquisaCidade (set<shared_ptr<Imovel>>&, string);
+multiset<shared_ptr<Imovel>> pesquisaCidade (multiset<shared_ptr<Imovel>>&, string);
 //FUNCAO 7 
 //template <typename T>
 //typename set<shared_ptr<Imovel>>::iterator pesquisaProprietario(set<shared_ptr<Imovel>>&, string);
 
 //FUNCAO 8 - OUTPUT - (int = 0, terminal) (int = 1, arquivo)
-void imprimirTodos (const set<shared_ptr<Imovel>>&, int); 
+void imprimirTodos (const multiset<shared_ptr<Imovel>>&, int); 
 
 #endif

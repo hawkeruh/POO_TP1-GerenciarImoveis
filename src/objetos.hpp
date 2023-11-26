@@ -6,14 +6,18 @@ using namespace std;
 #define OBJETOS_HPP
 
 class Imovel {
-    int id, numero, quartos, banheiros;
+
     float valor;
+    int id, numero, quartos, banheiros;
     string proprietario, rua, bairro, cidade;
 
 public:
 
-    Imovel(int, int, int, int, float, string, string, string, string);
+    Imovel(float, int, int, int, int, string, string, string, string);
     virtual ~Imovel() = 0;
+
+    void setValor(float);
+    float getValor() const; 
 
     void setID(int);
     void setNumero(int);
@@ -24,9 +28,6 @@ public:
     int getNumero() const;
     int getQuartos() const;
     int getBanheiros() const;
-
-    void setValor(float);
-    float getValor() const; 
 
     void setProprietario(string);
     void setRua(string);
@@ -39,9 +40,10 @@ public:
     string getCidade() const;
 
     friend ostream& operator<<(ostream& saida, Imovel& imovel);
-    bool operator==(Imovel& comparar);
-    bool operator<(Imovel& comparar);
-    bool operator>(Imovel& comparar);
+    bool operator<(const Imovel& comparar) const;
+    bool operator>(const Imovel& comparar) const;
+    bool operator==(const Imovel& comparar) const;
+
 };
 
 class Casa : public Imovel {
@@ -50,7 +52,7 @@ class Casa : public Imovel {
 
 public:
 
-    Casa(int, int, int, int, float, string, string, string, string, int, bool);
+    Casa(float, int, int, int, int, string, string, string, string, int, bool);
     ~Casa();
 
     void setAndares(int);
@@ -69,7 +71,7 @@ class Apartamento : public Imovel {
 
 public:
     
-    Apartamento(int, int, int, int, float, string, string, string, string, int, float, bool, bool);
+    Apartamento(float, int, int, int, int, string, string, string, string, int, float, bool, bool);
     ~Apartamento();
 
     void setAndar(int);
@@ -88,12 +90,12 @@ public:
 };
 
 class Chacara : public Imovel {
-    
+
     bool salao_festa, salao_jogos, campo_futebol, churrasqueira, piscina; 
 
 public:
     
-    Chacara(int, int, int, int, float, string, string, string, string, bool, bool, bool, bool, bool);
+    Chacara(float, int, int, int, int, string, string, string, string, bool, bool, bool, bool, bool);
     ~Chacara();
 
     void setSalaoFesta(bool);
@@ -112,5 +114,6 @@ public:
 };
 
 string SimNao(bool);
+bool operator<(Imovel& comparar1, Imovel& comparar2);
 
 #endif

@@ -8,8 +8,8 @@ int main (){
     string tipo;
 
     //Somente UMA coleção polimorfica dentro do main
-    set<shared_ptr<Imovel>> colecao;
-    set<shared_ptr<Imovel>>::iterator iter;
+    multiset<shared_ptr<Imovel>> colecao;
+    multiset<shared_ptr<Imovel>>::iterator iter;
 
     //Leitura de um arquivo texto e inserção em uma coleção
     colecao = criarBancodeDados();
@@ -41,7 +41,12 @@ int main (){
         cin >> floatAux; 
 
         colecao = pesquisaValor(colecao, floatAux);
-        imprimirTodos(colecao, 0);
+
+        if (colecao.empty()){
+            cout << "Não existe imóveis igual ou abaixo esse valor." << endl;
+        } else {
+            imprimirTodos(colecao, 0);
+        }
 
         break;
 
@@ -51,13 +56,21 @@ int main (){
         cin >> intAux;
 
         colecao = pesquisaQuarto(colecao, intAux);
-        imprimirTodos(colecao, 0);
+
+        if (colecao.empty()){
+            cout << "Não existe imóveis com esse número ou mais de quartos. " << endl;
+        } else {
+            imprimirTodos(colecao, 0);
+        }
 
         break;
 
     case 5: //FUNCAO 5 - TIPO DE IMOVEL - ORDENADOS POR VALOR
+    
         cout << "Insira o tipo de imóvel que deseja visualizar. (Ordenado por valor)" << endl; 
-        cin >> tipo; 
+        
+        cin.ignore();
+        getline(cin, tipo);
 
         colecao = pesquisaTipo(colecao, tipo);
         imprimirTodos(colecao, 0);
@@ -67,10 +80,17 @@ int main (){
     case 6: //FUNCAO 6 - CIDADE - IMOVEIS ORDEM DECRESCENTE POR VALOR
 
         cout << "Insira o nome da cidade que deseja ver os imóveis diponivéis. (Ordenado decrescentemente por valor)" << endl;
-        cin >> tipo; 
+        
+        cin.ignore();
+        getline(cin, tipo);
 
         colecao = pesquisaCidade(colecao, tipo);
-        imprimirTodos(colecao, 2);
+
+        if (colecao.empty()){
+            cout << "Não existe imóveis que se encontram nessa cidade. " << endl;
+        } else {
+            imprimirTodos(colecao, 2);
+        }
 
         break;
 
